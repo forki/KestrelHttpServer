@@ -16,6 +16,7 @@
     <MicrosoftAspNetCoreHttpPackageVersion>2.1.0-preview1-27776</MicrosoftAspNetCoreHttpPackageVersion>
     <MicrosoftAspNetCoreTestingPackageVersion>2.1.0-preview1-27776</MicrosoftAspNetCoreTestingPackageVersion>
     <MicrosoftAspNetCoreWebUtilitiesPackageVersion>2.1.0-preview1-27776</MicrosoftAspNetCoreWebUtilitiesPackageVersion>
+    <MicrosoftExtensionsConfigurationJsonPackageVersion>2.1.0-preview1-27776</MicrosoftExtensionsConfigurationJsonPackageVersion>
     <MicrosoftExtensionsLoggingAbstractionsPackageVersion>2.1.0-preview1-27776</MicrosoftExtensionsLoggingAbstractionsPackageVersion>
     <MicrosoftExtensionsLoggingConsolePackageVersion>2.1.0-preview1-27776</MicrosoftExtensionsLoggingConsolePackageVersion>
     <MicrosoftExtensionsLoggingPackageVersion>2.1.0-preview1-27776</MicrosoftExtensionsLoggingPackageVersion>
