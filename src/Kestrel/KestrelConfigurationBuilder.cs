@@ -224,8 +224,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel
                     httpsOptions.ServerCertificate = listenOptions.KestrelServerOptions.GetOverriddenDefaultCertificate();
                     Options.GetHttpsDefaults()(httpsOptions);
 
-                    var certInfo = new CertificateConfig(endpoint.CertConfig);
-                    httpsOptions.ServerCertificate = LoadCertificate(certInfo, endpoint.Name);
+                    httpsOptions.ServerCertificate = LoadCertificate(endpoint.Certificate, endpoint.Name);
                     if (httpsOptions.ServerCertificate == null)
                     {
                         var provider = Options.ApplicationServices.GetRequiredService<IDefaultHttpsProvider>();
@@ -258,9 +257,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel
 
         private void LoadDefaultCert(ConfigurationReader configReader)
         {
-            var defaultCertConfig = configReader.Certificates
-                .Where(cert => string.Equals("Default", cert.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-            if (defaultCertConfig != null)
+            if (configReader.Certificates.TryGetValue("Default", out var defaultCertConfig))
             {
                 var defaultCert = LoadCertificate(defaultCertConfig, "Default");
                 if (defaultCert != null)

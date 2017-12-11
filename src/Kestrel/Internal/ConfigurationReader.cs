@@ -11,16 +11,15 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal
     internal class ConfigurationReader
     {
         private IConfiguration _configuration;
-        private IList<CertificateConfig> _certificates;
+        private IDictionary<string, CertificateConfig> _certificates;
         private IList<EndpointConfig> _endpoints;
 
         public ConfigurationReader(IConfiguration configuration)
         {
-            // May be null
-            _configuration = configuration;
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
-        public IEnumerable<CertificateConfig> Certificates
+        public IDictionary<string, CertificateConfig> Certificates
         {
             get
             {
@@ -48,28 +47,18 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal
 
         private void ReadCertificates()
         {
-            _certificates = new List<CertificateConfig>();
-
-            if (_configuration == null)
-            {
-                return;
-            }
+            _certificates = new Dictionary<string, CertificateConfig>(0);
 
             var certificatesConfig = _configuration.GetSection("Certificates").GetChildren();
             foreach (var certificateConfig in certificatesConfig)
             {
-                _certificates.Add(new CertificateConfig(certificateConfig));
+                _certificates.Add(certificateConfig.Key, new CertificateConfig(certificateConfig));
             }
         }
 
         private void ReadEndpoints()
         {
             _endpoints = new List<EndpointConfig>();
-
-            if (_configuration == null)
-            {
-                return;
-            }
 
             var endpointsConfig = _configuration.GetSection("Endpoints").GetChildren();
             foreach (var endpointConfig in endpointsConfig)
@@ -93,7 +82,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal
                     Name = endpointConfig.Key,
                     Url = url,
                     ConfigSection = endpointConfig,
-                    CertConfig = endpointConfig.GetSection("Certificate"),
+                    Certificate = new CertificateConfig(endpointConfig.GetSection("Certificate")),
                 };
                 _endpoints.Add(endpoint);
             }
@@ -105,7 +94,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal
         public string Name { get; set; }
         public string Url { get; set; }
         public IConfigurationSection ConfigSection { get; set; }
-        public IConfigurationSection CertConfig { get; set; }
+        public CertificateConfig Certificate { get; set; }
     }
 
     // "CertificateName": {
@@ -121,11 +110,9 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal
 
         public IConfigurationSection ConfigSection { get; }
 
-        public string Name => ConfigSection.Key;
+        public bool Exists => ConfigSection.GetChildren().Any();
 
-        public bool Exists => ConfigSection?.GetChildren().Any() ?? false;
-
-        public string Id => ConfigSection?.Key;
+        public string Id => ConfigSection.Key;
 
         // File
         public bool IsFileCert => !string.IsNullOrEmpty(Path);
