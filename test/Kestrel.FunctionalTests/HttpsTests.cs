@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
@@ -15,8 +14,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal;
 using Microsoft.AspNetCore.Server.Kestrel.Https;
 using Microsoft.AspNetCore.Server.Kestrel.Https.Internal;
+using Microsoft.AspNetCore.Server.Kestrel.Internal;
 using Microsoft.AspNetCore.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -30,7 +31,10 @@ namespace Microsoft.AspNetCore.Server.Kestrel.FunctionalTests
         private KestrelServerOptions CreateServerOptions()
         {
             var serverOptions = new KestrelServerOptions();
-            serverOptions.ApplicationServices = new ServiceCollection().AddLogging().BuildServiceProvider();
+            serverOptions.ApplicationServices = new ServiceCollection()
+                .AddLogging()
+                .AddSingleton<IDefaultHttpsProvider, DefaultHttpsProvider>()
+                .BuildServiceProvider();
             return serverOptions;
         }
 
@@ -40,7 +44,13 @@ namespace Microsoft.AspNetCore.Server.Kestrel.FunctionalTests
             var serverOptions = CreateServerOptions();
             var defaultCert = new X509Certificate2(TestResources.TestCertificatePath, "testPassword");
             serverOptions.OverrideDefaultCertificate(defaultCert);
+
             serverOptions.ListenLocalhost(5000, options =>
+            {
+                options.UseHttps();
+            });
+
+            serverOptions.ListenLocalhost(5001, options =>
             {
                 options.UseHttps(opt =>
                 {

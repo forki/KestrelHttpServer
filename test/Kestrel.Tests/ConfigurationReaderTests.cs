@@ -27,7 +27,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Tests
         {
             var config = new ConfigurationBuilder().AddInMemoryCollection(new[]
             {
-                new KeyValuePair<string, string>( "Certificates", "" ),
+                new KeyValuePair<string, string>("Certificates", ""),
             }).Build();
             var reader = new ConfigurationReader(config);
             var certificates = reader.Certificates;
@@ -40,12 +40,12 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Tests
         {
             var config = new ConfigurationBuilder().AddInMemoryCollection(new[]
             {
-                new KeyValuePair<string, string>( "Certificates:FileCert:Path", "/path/cert.pfx" ),
-                new KeyValuePair<string, string>( "Certificates:FileCert:Password", "certpassword" ),
-                new KeyValuePair<string, string>( "Certificates:StoreCert:Subject", "certsubject" ),
-                new KeyValuePair<string, string>( "Certificates:StoreCert:Store", "certstore" ),
-                new KeyValuePair<string, string>( "Certificates:StoreCert:Location", "cetlocation" ),
-                new KeyValuePair<string, string>( "Certificates:StoreCert:AllowInvalid", "true" ),
+                new KeyValuePair<string, string>("Certificates:FileCert:Path", "/path/cert.pfx"),
+                new KeyValuePair<string, string>("Certificates:FileCert:Password", "certpassword"),
+                new KeyValuePair<string, string>("Certificates:StoreCert:Subject", "certsubject"),
+                new KeyValuePair<string, string>("Certificates:StoreCert:Store", "certstore"),
+                new KeyValuePair<string, string>("Certificates:StoreCert:Location", "cetlocation"),
+                new KeyValuePair<string, string>("Certificates:StoreCert:AllowInvalid", "true"),
             }).Build();
             var reader = new ConfigurationReader(config);
             var certificates = reader.Certificates;
@@ -82,7 +82,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Tests
         {
             var config = new ConfigurationBuilder().AddInMemoryCollection(new[]
             {
-                new KeyValuePair<string, string>( "Endpoints", "" ),
+                new KeyValuePair<string, string>("Endpoints", ""),
             }).Build();
             var reader = new ConfigurationReader(config);
             var endpoints = reader.Endpoints;
@@ -95,7 +95,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Tests
         {
             var config = new ConfigurationBuilder().AddInMemoryCollection(new[]
             {
-                new KeyValuePair<string, string>( "Endpoints:End1", "" ),
+                new KeyValuePair<string, string>("Endpoints:End1", ""),
             }).Build();
             var reader = new ConfigurationReader(config);
             Assert.Throws<InvalidOperationException>(() => reader.Endpoints);
@@ -106,7 +106,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Tests
         {
             var config = new ConfigurationBuilder().AddInMemoryCollection(new[]
             {
-                new KeyValuePair<string, string>( "Endpoints:End1:Url", "" ),
+                new KeyValuePair<string, string>("Endpoints:End1:Url", ""),
             }).Build();
             var reader = new ConfigurationReader(config);
             Assert.Throws<InvalidOperationException>(() => reader.Endpoints);
@@ -117,16 +117,16 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Tests
         {
             var config = new ConfigurationBuilder().AddInMemoryCollection(new[]
             {
-                new KeyValuePair<string, string>( "Endpoints:End1:Url", "http://*:5001" ),
-                new KeyValuePair<string, string>( "Endpoints:End2:Url", "https://*:5002" ),
-                new KeyValuePair<string, string>( "Endpoints:End3:Url", "https://*:5003" ),
-                new KeyValuePair<string, string>( "Endpoints:End3:Certificate:Path",  "/path/cert.pfx" ),
-                new KeyValuePair<string, string>( "Endpoints:End3:Certificate:Password",  "certpassword" ),
-                new KeyValuePair<string, string>( "Endpoints:End4:Url", "https://*:5004" ),
-                new KeyValuePair<string, string>( "Endpoints:End4:Certificate:Subject",  "certsubject" ),
-                new KeyValuePair<string, string>( "Endpoints:End4:Certificate:Store",  "certstore" ),
-                new KeyValuePair<string, string>( "Endpoints:End4:Certificate:Location",  "cetlocation" ),
-                new KeyValuePair<string, string>( "Endpoints:End4:Certificate:AllowInvalid",  "true" ),
+                new KeyValuePair<string, string>("Endpoints:End1:Url", "http://*:5001"),
+                new KeyValuePair<string, string>("Endpoints:End2:Url", "https://*:5002"),
+                new KeyValuePair<string, string>("Endpoints:End3:Url", "https://*:5003"),
+                new KeyValuePair<string, string>("Endpoints:End3:Certificate:Path", "/path/cert.pfx"),
+                new KeyValuePair<string, string>("Endpoints:End3:Certificate:Password",  "certpassword"),
+                new KeyValuePair<string, string>("Endpoints:End4:Url", "https://*:5004"),
+                new KeyValuePair<string, string>("Endpoints:End4:Certificate:Subject",  "certsubject"),
+                new KeyValuePair<string, string>("Endpoints:End4:Certificate:Store", "certstore"),
+                new KeyValuePair<string, string>("Endpoints:End4:Certificate:Location", "cetlocation"),
+                new KeyValuePair<string, string>("Endpoints:End4:Certificate:AllowInvalid", "true"),
             }).Build();
             var reader = new ConfigurationReader(config);
             var endpoints = reader.Endpoints;
