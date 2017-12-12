@@ -127,9 +127,6 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Tests
         public void ConfigureDefaultsAppliesToNewConfigureEndpoints()
         {
             var serverOptions = CreateServerOptions();
-            serverOptions.ListenLocalhost(5000);
-
-            Assert.True(serverOptions.ListenOptions[0].NoDelay);
 
             serverOptions.ConfigureEndpointDefaults(opt =>
             {

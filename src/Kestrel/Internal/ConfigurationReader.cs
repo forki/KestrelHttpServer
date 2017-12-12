@@ -117,20 +117,20 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal
         // File
         public bool IsFileCert => !string.IsNullOrEmpty(Path);
 
-        public string Path => ConfigSection?["Path"];
+        public string Path => ConfigSection["Path"];
 
-        public string Password => ConfigSection?["Password"];
+        public string Password => ConfigSection["Password"];
 
         // Cert store
 
         public bool IsStoreCert => !string.IsNullOrEmpty(Subject);
 
-        public string Subject => ConfigSection?["Subject"];
+        public string Subject => ConfigSection["Subject"];
 
-        public string Store => ConfigSection?["Store"];
+        public string Store => ConfigSection["Store"];
 
-        public string Location => ConfigSection?["Location"];
+        public string Location => ConfigSection["Location"];
 
-        public bool? AllowInvalid => ConfigSection?.GetSection("AllowInvalid")?.Get<bool?>();
+        public bool? AllowInvalid => ConfigSection.GetSection("AllowInvalid").Get<bool?>();
     }
 }

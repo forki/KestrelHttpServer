@@ -14,13 +14,13 @@ namespace Microsoft.AspNetCore.Server.Kestrel
         {
             IsHttps = isHttps;
             Listener = listenOptions ?? throw new ArgumentNullException(nameof(listenOptions));
-            Https = httpsOptions;
+            Https = httpsOptions ?? throw new ArgumentNullException(nameof(httpsOptions));
             ConfigSection = configSection ?? throw new ArgumentNullException(nameof(configSection));
         }
 
         public bool IsHttps { get; }
         public ListenOptions Listener { get; }
-        public HttpsConnectionAdapterOptions Https { get; set; }
+        public HttpsConnectionAdapterOptions Https { get; }
         public IConfigurationSection ConfigSection { get; }
     }
 }
