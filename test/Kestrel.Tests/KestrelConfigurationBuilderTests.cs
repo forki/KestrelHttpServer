@@ -150,6 +150,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Tests
                 {
                     ran1 = true;
                     Assert.True(opt.IsHttps);
+                    Assert.NotNull(opt.Https.ServerCertificate);
                     Assert.Equal(ClientCertificateMode.RequireCertificate, opt.Https.ClientCertificateMode);
                     Assert.False(opt.Listener.NoDelay);
                 })

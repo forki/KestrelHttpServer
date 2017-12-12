@@ -221,15 +221,18 @@ namespace Microsoft.AspNetCore.Server.Kestrel
                 var httpsOptions = new HttpsConnectionAdapterOptions();
                 if (https)
                 {
+                    // Defaults
                     httpsOptions.ServerCertificate = listenOptions.KestrelServerOptions.GetOverriddenDefaultCertificate();
                     Options.GetHttpsDefaults()(httpsOptions);
-
-                    httpsOptions.ServerCertificate = LoadCertificate(endpoint.Certificate, endpoint.Name);
                     if (httpsOptions.ServerCertificate == null)
                     {
                         var provider = Options.ApplicationServices.GetRequiredService<IDefaultHttpsProvider>();
-                        httpsOptions.ServerCertificate = provider.Certificate; // May be null
+                        httpsOptions.ServerCertificate = provider.Certificate; // May be null.
                     }
+
+                    // Specified
+                    httpsOptions.ServerCertificate = LoadCertificate(endpoint.Certificate, endpoint.Name)
+                        ?? httpsOptions.ServerCertificate;
                 }
 
                 var endpointConfig = new EndpointConfiguration(https, listenOptions, httpsOptions, endpoint.ConfigSection);
